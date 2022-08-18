@@ -4,12 +4,12 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const mongoose = require("mongoose")
 
-const User = require("../../models/user")
+const Admin = require("../../models/admin")
 
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body
 
-  User.findOne({ email })
+  Admin.findOne({ email })
     .exec()
     .then((user) => {
       if (user) {
