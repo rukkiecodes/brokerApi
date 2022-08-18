@@ -51,7 +51,8 @@ app.use('/admin', [
   require('./admin/auth/signin'),
   require('./admin/auth/getProfile'),
   require('./admin/auth/updateProfile'),
-  require('./admin/auth/updateAvatar')
+  require('./admin/auth/updateAvatar'),
+  require('./admin/auth/allUsers')
 ])
 
 app.use('/waitlist', [
