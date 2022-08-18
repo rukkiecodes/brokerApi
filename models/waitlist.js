@@ -6,6 +6,9 @@ const WaitlistSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  phone: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

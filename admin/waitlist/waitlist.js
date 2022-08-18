@@ -4,7 +4,7 @@ const { mongoose } = require("mongoose")
 const Waitlist = require("../../models/waitlist")
 
 router.post("/addWait", async (req, res) => {
-  const { email, phone } = req.body
+  const { email } = req.body
 
   if (email) {
     let user = await Waitlist.findOne({ email })
@@ -17,8 +17,7 @@ router.post("/addWait", async (req, res) => {
     } else {
       Waitlist.create({
         _id: new mongoose.Types.ObjectId(),
-        email,
-        phone
+        email
       })
 
       res.status(201).json({
