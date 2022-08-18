@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const User = require("../../models/user")
+const Admin = require("../../models/admin")
 const checkAuth = require("../../middleware/auth")
 
 router.post("/updateProfile", checkAuth, async (req, res) => {
@@ -15,7 +15,7 @@ router.post("/updateProfile", checkAuth, async (req, res) => {
   } = req.body
 
   try {
-    let user = await User.updateOne({ email }, {
+    let user = await Admin.updateOne({ email }, {
       $set: {
         name,
         phone,

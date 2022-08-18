@@ -1,12 +1,12 @@
 const router = require("express").Router()
-const User = require("../../models/user")
+const Admin = require("../../models/admin")
 const checkAuth = require("../../middleware/auth")
 
 router.post("/profile", checkAuth, async (req, res) => {
   const { email } = req.body
 
   try {
-    let user = await User.findOne({ email })
+    let user = await Admin.findOne({ email })
     if (user) {
       return res.status(200).json({
         message: "Profile found",
