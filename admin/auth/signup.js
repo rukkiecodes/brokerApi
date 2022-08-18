@@ -3,14 +3,14 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const mongoose = require("mongoose")
 
-const User = require("../../models/user")
+const Admin = require("../../models/admin")
 
 const userOTPVerification = require("../../models/userOTPVerification")
 
 const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
 
-const { email, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRETE, GOOGLE_REDIRECT_URI, GOOGLE_REFRESH_TOKEN } = process.env
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRETE, GOOGLE_REDIRECT_URI, GOOGLE_REFRESH_TOKEN } = process.env
 
 const oAuth2Client = new google.auth.OAuth2(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRETE, GOOGLE_REDIRECT_URI)
 oAuth2Client.setCredentials({ refresh_token: GOOGLE_REFRESH_TOKEN })
@@ -19,10 +19,9 @@ router.post("/signup", async (req, res) => {
   const { firstName, lastName, referal, email, phone, password } = req.body
 
   try {
-    let user = await User.findOne({ email })
+    let user = await Admin.findOne({ email })
 
     if (user) {
-      console.log("User exists")
       res.status(401).json({
         message: "Auth failed",
       })
@@ -37,13 +36,13 @@ router.post("/signup", async (req, res) => {
             _id: new mongoose.Types.ObjectId(),
             firstName,
             lastName,
-            referal,
             email,
             phone,
+            admin: true,
             password: hash,
             verified: false
           }
-          user = await User.create(newUser)
+          user = await Admin.create(newUser)
           sendOTPVerificationEmail(user, res)
 
           res.status(201).json({

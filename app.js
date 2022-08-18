@@ -44,6 +44,16 @@ app.use('/auth', [
   require('./routes/auth/updateAvatar')
 ])
 
+app.use('/admin', [
+  require('./admin/auth/signup'),
+  require('./admin/auth/verifyOTP'),
+  require('./admin/auth/resendVerification'),
+  require('./admin/auth/signin'),
+  require('./admin/auth/getProfile'),
+  require('./admin/auth/updateProfile'),
+  require('./admin/auth/updateAvatar')
+])
+
 app.use('/waitlist', [
   require('./routes/waitlist/waitlist'),
   require('./routes/waitlist/getList')
