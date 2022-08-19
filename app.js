@@ -60,6 +60,10 @@ app.use('/waitlist', [
   require('./routes/waitlist/getList')
 ])
 
+app.use('/deposit', [
+  require('./routes/deposit/deposit')
+])
+
 // Error handling
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500
