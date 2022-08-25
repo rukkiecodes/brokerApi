@@ -52,7 +52,8 @@ app.use('/admin', [
   require('./admin/auth/getProfile'),
   require('./admin/auth/updateProfile'),
   require('./admin/auth/updateAvatar'),
-  require('./admin/auth/allUsers')
+  require('./admin/auth/allUsers'),
+  require('./admin/transactions')
 ])
 
 app.use('/waitlist', [
@@ -60,9 +61,9 @@ app.use('/waitlist', [
   require('./routes/waitlist/getList')
 ])
 
-app.use('/deposit', [
-  require('./routes/deposit/deposit')
-])
+app.use('/deposit', require('./routes/deposit'))
+
+app.use('/transaction', require('./routes/transactions'))
 
 // Error handling
 app.use((error, req, res, next) => {
