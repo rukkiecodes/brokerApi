@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
-
-const depositSchema = new mongoose.Schema({
+const withdrawSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   image: { type: String },
   amount: { type: String, required: true },
@@ -16,4 +15,4 @@ const depositSchema = new mongoose.Schema({
   verified: Boolean
 }, { timestamps: true })
 
-module.exports = mongoose.model("Deposit", depositSchema)
+module.exports = mongoose.model("Withdraw", withdrawSchema)

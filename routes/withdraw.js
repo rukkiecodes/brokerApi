@@ -1,12 +1,12 @@
 const router = require("express").Router()
-const Deposit = require('../models/deposit')
+const Withdraw = require('../models/withraw')
 const User = require('../models/user')
 const Transaction = require('../models/transaction')
 const mongoose = require("mongoose")
 
 const uuid = require('uuid-random')
 
-router.post('/add', async (req, res) => {
+router.post('/withdraw', async (req, res) => {
   const { _id, amount, currency, description } = req.body
   try {
     let user = await User.findOne({ _id })
@@ -14,14 +14,14 @@ router.post('/add', async (req, res) => {
     let id = new mongoose.Types.ObjectId()
     let ref_x = `BLUE_ZONE://${_id}${uuid()}`
 
-    const newDeposit = await Deposit.create({
+    const newWithdraw = await Withdraw.create({
       _id: id,
       user: user._id,
       amount,
       currency,
-      description,
+      ref_x,
       status: 'PENDING',
-      ref_x
+      description
     })
 
     await Transaction.create({
@@ -29,14 +29,14 @@ router.post('/add', async (req, res) => {
       user: user._id,
       amount,
       currency,
-      description,
-      status: 'PENDING',
       ref_x,
-      type: 'deposit'
+      description,
+      type: 'withdraw'
     })
 
     return res.json({
-      deposit: newDeposit
+      withdraw: newWithdraw,
+      user
     })
 
   } catch (error) {

@@ -46,4 +46,22 @@ router.post('/getSingleTransaction', async (req, res) => {
   })
 })
 
+router.post('/getPendingTransactions', async (req, res) => {
+  let transaction = await Deposit.find({ status: 'PENDING' })
+
+  return res.status(200).json({
+    message: "transaction found",
+    transaction,
+  })
+})
+
+router.post('/getPendingTransactions', async (req, res) => {
+  let transaction = await Deposit.find({ status: 'CONFIRMED' })
+
+  return res.status(200).json({
+    message: "transaction found",
+    transaction,
+  })
+})
+
 module.exports = router

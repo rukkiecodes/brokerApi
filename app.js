@@ -65,6 +65,8 @@ app.use('/deposit', require('./routes/deposit'))
 
 app.use('/transaction', require('./routes/transactions'))
 
+app.use('/withdraw', require('./routes/withdraw'))
+
 // Error handling
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500
