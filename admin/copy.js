@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const Copy = require('../models/copyTrades')
+const Copy = require('../models/copy')
 
 router.post('/creatCopy', async (req, res) => {
   const { image, name, wins, losses, user, rate, profit } = req.body
