@@ -3,10 +3,11 @@ const Withdraw = require('../models/withraw')
 const User = require('../models/user')
 const Transaction = require('../models/transaction')
 const mongoose = require("mongoose")
+const checkAuth = require("../middleware/auth")
 
 const uuid = require('uuid-random')
 
-router.post('/withdraw', async (req, res) => {
+router.post('/withdraw', checkAuth, async (req, res) => {
   const { _id, amount, currency, description } = req.body
   try {
     let user = await User.findOne({ _id })

@@ -5,7 +5,8 @@ const checkAuth = require("../../middleware/auth")
 router.post("/updateProfile", checkAuth, async (req, res) => {
   const {
     email,
-    name,
+    firstName,
+    lastName,
     phone,
     gender,
     state,
@@ -17,7 +18,8 @@ router.post("/updateProfile", checkAuth, async (req, res) => {
   try {
     let user = await User.updateOne({ email }, {
       $set: {
-        name,
+        firstName,
+        lastName,
         phone,
         gender,
         state,

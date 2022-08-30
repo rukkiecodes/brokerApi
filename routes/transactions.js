@@ -3,8 +3,9 @@ const Deposit = require('../models/deposit')
 const Transaction = require('../models/transaction')
 const upload = require('../middleware/multer')
 const cloudinary = require('../middleware/cloud')
+const checkAuth = require("../middleware/auth")
 
-router.post('/getTransactions', async (req, res) => {
+router.post('/getTransactions', checkAuth, async (req, res) => {
   const { user } = req.body
 
   let transactions = await Deposit.find({ user })
@@ -21,7 +22,7 @@ router.post('/getTransactions', async (req, res) => {
     })
 })
 
-router.post('/getSingleTransaction', async (req, res) => {
+router.post('/getSingleTransaction', checkAuth, async (req, res) => {
   const { _id } = req.body
 
   let transaction = await Deposit.findOne({ _id })

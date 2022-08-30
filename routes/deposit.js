@@ -3,10 +3,11 @@ const Deposit = require('../models/deposit')
 const User = require('../models/user')
 const Transaction = require('../models/transaction')
 const mongoose = require("mongoose")
+const checkAuth = require("../middleware/auth")
 
 const uuid = require('uuid-random')
 
-router.post('/add', async (req, res) => {
+router.post('/add', checkAuth, async (req, res) => {
   const { _id, amount, currency, description } = req.body
   try {
     let user = await User.findOne({ _id })

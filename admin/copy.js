@@ -1,7 +1,8 @@
 const router = require('express').Router()
 const Copy = require('../models/copy')
+const checkAuth = require("../middleware/auth")
 
-router.post('/creatCopy', async (req, res) => {
+router.post('/creatCopy', checkAuth, async (req, res) => {
   const { image, name, wins, losses, user, rate, profit } = req.body
 
   try {
