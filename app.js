@@ -21,6 +21,8 @@ app.use(
 
 app.use(bodyParser.json({ limit: "50mb" }))
 
+app.set('view engine', 'ejs')
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*")
   res.header("Access-Control-Allow-Headers", "*")
@@ -41,7 +43,8 @@ app.use('/auth', [
   require('./routes/auth/signin'),
   require('./routes/auth/getProfile'),
   require('./routes/auth/updateProfile'),
-  require('./routes/auth/updateAvatar')
+  require('./routes/auth/updateAvatar'),
+  require('./routes/auth/recoverPassword'),
 ])
 
 app.use('/admin', [
@@ -63,12 +66,13 @@ app.use('/waitlist', [
 ])
 
 app.use('/deposit', require('./routes/deposit'))
-
 app.use('/transaction', require('./routes/transactions'))
-
 app.use('/withdraw', require('./routes/withdraw'))
-
 app.use('/copy', require('./routes/copy'))
+
+app.get('/forgotPassword', (req, res) => {
+  res.render('forgotPassword')
+})
 
 // Error handling
 app.use((error, req, res, next) => {
@@ -98,5 +102,5 @@ app.use((error, req, res, next) => {
 const PORT = process.env.PORT || 8000
 app.listen(
   PORT,
-  console.log(`Server running in ${process.env.NODE_ENV} mode on ${PORT}`)
+  console.log(`🚀 @http://localhost:${PORT}`)
 )
