@@ -3,7 +3,7 @@ const User = require('../../models/user')
 const checkAuth = require("../../middleware/auth")
 
 router.get('/allUsers', checkAuth, async (req, res) => {
-  const users = await User.find({})
+  const users = await User.find()
 
   try {
     res.json({
