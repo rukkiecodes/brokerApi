@@ -33,7 +33,7 @@ router.post('/getSingleTransaction', checkAuth, async (req, res) => {
   })
 })
 
-router.post('/proofOfPayment', upload.single('pop'), async (req, res) => {
+router.post('/proofOfPayment', upload.single('pop'), checkAuth, async (req, res) => {
   const { user, _id } = req.body
   try {
     const result = await cloudinary.uploader.upload(req.file.path, {
