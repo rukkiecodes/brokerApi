@@ -4,16 +4,21 @@ const User = require('../models/user')
 const Transaction = require('../models/transaction')
 const mongoose = require("mongoose")
 const checkAuth = require("../middleware/auth")
+const upload = require('../middleware/multer')
+const cloudinary = require('../middleware/cloud')
 
 const uuid = require('uuid-random')
 
-router.post('/add', checkAuth, async (req, res) => {
+router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
   const { _id, amount, currency, description } = req.body
+
   try {
     let user = await User.findOne({ _id })
-
     let id = new mongoose.Types.ObjectId()
     let ref_x = `BLUE_ZONE://${_id}${uuid()}`
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: process.env.CLOUDINARY_FOLDER,
+    })
 
     const newDeposit = await Deposit.create({
       _id: id,
@@ -22,7 +27,8 @@ router.post('/add', checkAuth, async (req, res) => {
       currency,
       description,
       status: 'PENDING',
-      ref_x
+      ref_x,
+      pop: result.secure_url
     })
 
     await Transaction.create({
@@ -33,16 +39,49 @@ router.post('/add', checkAuth, async (req, res) => {
       description,
       status: 'PENDING',
       ref_x,
-      type: 'deposit'
+      type: 'deposit',
+      pop: result.secure_url
     })
 
     return res.json({
       deposit: newDeposit
     })
-
   } catch (error) {
-    throw ("error")
+    res.status(401).json({
+      error,
+      success: false,
+      message: "Error prosessing deposit",
+    })
   }
+  // try {
+  //   const newDeposit = await Deposit.create({
+  //     _id: id,
+  //     user: user._id,
+  //     amount,
+  //     currency,
+  //     description,
+  //     status: 'PENDING',
+  //     ref_x
+  //   })
+
+  //   await Transaction.create({
+  //     _id: id,
+  //     user: user._id,
+  //     amount,
+  //     currency,
+  //     description,
+  //     status: 'PENDING',
+  //     ref_x,
+  //     type: 'deposit'
+  //   })
+
+  //   return res.json({
+  //     deposit: newDeposit
+  //   })
+
+  // } catch (error) {
+  //   throw ("error")
+  // }
 })
 
 module.exports = router
