@@ -53,35 +53,6 @@ router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
       message: "Error prosessing deposit",
     })
   }
-  // try {
-  //   const newDeposit = await Deposit.create({
-  //     _id: id,
-  //     user: user._id,
-  //     amount,
-  //     currency,
-  //     description,
-  //     status: 'PENDING',
-  //     ref_x
-  //   })
-
-  //   await Transaction.create({
-  //     _id: id,
-  //     user: user._id,
-  //     amount,
-  //     currency,
-  //     description,
-  //     status: 'PENDING',
-  //     ref_x,
-  //     type: 'deposit'
-  //   })
-
-  //   return res.json({
-  //     deposit: newDeposit
-  //   })
-
-  // } catch (error) {
-  //   throw ("error")
-  // }
 })
 
 module.exports = router
