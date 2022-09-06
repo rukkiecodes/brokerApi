@@ -12,7 +12,8 @@ router.post("/updateProfile", checkAuth, async (req, res) => {
     state,
     lga,
     specialty,
-    description
+    description,
+    wallet
   } = req.body
 
   try {
@@ -25,7 +26,8 @@ router.post("/updateProfile", checkAuth, async (req, res) => {
         state,
         lga,
         specialty,
-        description
+        description,
+        wallet
       }
     })
     return res.status(200).json({
