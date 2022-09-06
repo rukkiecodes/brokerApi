@@ -74,6 +74,10 @@ app.get('/forgotPassword', (req, res) => {
   res.render('forgotPassword')
 })
 
+app.get('/', (req, res) => {
+  res.send('Welcome to blue zone. \n everything looks good.\n the  server is up')
+})
+
 // Error handling
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500
