@@ -12,6 +12,7 @@ const depositSchema = new mongoose.Schema({
     ref: "User",
   },
   status: { type: String },
+  wallet: { type: String },
   ref_x: { type: String },
   pop: { type: String },
   verified: Boolean

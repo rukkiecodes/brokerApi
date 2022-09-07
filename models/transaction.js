@@ -13,6 +13,7 @@ const transactionSchema = new mongoose.Schema({
   },
   pop: { type: String },
   status: { type: String },
+  wallet: { type: String },
   ref_x: { type: String },
   type: { type: String },
   verified: Boolean
