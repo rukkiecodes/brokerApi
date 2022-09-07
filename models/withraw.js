@@ -11,6 +11,7 @@ const withdrawSchema = new mongoose.Schema({
     ref: "User",
   },
   status: { type: String },
+  wallet: { type: String },
   ref_x: { type: String },
   verified: Boolean
 }, { timestamps: true })

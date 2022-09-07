@@ -11,6 +11,7 @@ const copySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  copy: { type: String },
   rate: { type: String },
   profit: { type: String },
 }, { timestamps: true })
