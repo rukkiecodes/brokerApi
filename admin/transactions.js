@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Deposit = require('../models/deposit')
+const Transaction = require('../models/transaction')
 const checkAuth = require("../middleware/auth")
 
 router.post('/get', checkAuth, async (req, res) => {
@@ -61,6 +62,22 @@ router.get('/getConfirmedTransactions', checkAuth, async (req, res) => {
     message: "transaction found",
     transaction,
   })
+})
+
+router.post('/confirmTransactionRequest', checkAuth, async (req, res) => {
+  const { _id } = req.body
+  try {
+    const transaction = await Transaction.updateOne({ _id }, { $set: { status: 'CONFIRMED' } })
+
+    res.json({
+      transaction
+    })
+  } catch (error) {
+    return res.status(401).json({
+      message: "update failed",
+      error,
+    })
+  }
 })
 
 module.exports = router
