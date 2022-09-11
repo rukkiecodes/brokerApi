@@ -7,10 +7,6 @@ const upload = require("../middleware/multer")
 router.post('/creatCopy', upload.single('image'), async (req, res) => {
   const { name, wins, losses, rate, profit } = req.body
 
-  res.json({
-    image, name, wins, losses, rate, profit
-  })
-
   const _id = new mongoose.Types.ObjectId()
 
   try {
