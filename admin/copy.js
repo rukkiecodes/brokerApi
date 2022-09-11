@@ -1,19 +1,27 @@
 const router = require('express').Router()
 const Copy = require('../models/copy')
 const checkAuth = require("../middleware/auth")
+const cloudinary = require("../middleware/cloud")
+const upload = require("../middleware/multer")
 
-router.post('/creatCopy', async (req, res) => {
-  const { image, name, wins, losses, user, rate, profit } = req.body
+router.post('/creatCopy', upload.single('image'), async (req, res) => {
+  const { name, wins, losses, rate, profit } = req.body
 
   res.json({
-    image, name, wins, losses, user, rate, profit
+    image, name, wins, losses, rate, profit
   })
 
+  const _id = new mongoose.Types.ObjectId()
+
   try {
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: process.env.CLOUDINARY_FOLDER,
+    })
+
     const newCopy = await Copy.create({
-      _id: new mongoose.Types.ObjectId(),
-      user: user._id,
-      image,
+      _id,
+      user: _id,
+      image: result.secure_url,
       name,
       wins,
       losses,
@@ -28,7 +36,6 @@ router.post('/creatCopy', async (req, res) => {
     res.json({
       error: error.message
     })
-    // throw Error("error")
   }
 })
 
