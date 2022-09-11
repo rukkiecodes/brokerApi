@@ -11,4 +11,20 @@ router.post('/withdrawRequest', checkAuth, async (req, res) => {
   })
 })
 
+router.post('/confirmWithdrawRequest', checkAuth, async (req, res) => {
+  const { _id } = req.body
+  try {
+    const withraw = await Withdraw.updateOne({ _id }, { $set: { status: 'CONFIRMED' } })
+
+    res.json({
+      withraw
+    })
+  } catch (error) {
+    return res.status(401).json({
+      message: "update failed",
+      error,
+    })
+  }
+})
+
 module.exports = router
