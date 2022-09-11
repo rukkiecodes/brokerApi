@@ -3,6 +3,7 @@ const Copy = require('../models/copy')
 const checkAuth = require("../middleware/auth")
 const cloudinary = require("../middleware/cloud")
 const upload = require("../middleware/multer")
+const mongoose = require('mongoose')
 
 router.post('/creatCopy', upload.single('image'), async (req, res) => {
   const { name, wins, losses, rate, profit } = req.body
