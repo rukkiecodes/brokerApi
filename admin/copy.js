@@ -25,13 +25,33 @@ router.post('/creatCopy', upload.single('image'), async (req, res) => {
       rate,
       profit
     })
-    
+
     return res.json({
       copy: newCopy
     })
   } catch (error) {
     res.json({
       error: error.message
+    })
+  }
+})
+
+router.post('/deleteCopy', async (req, res) => {
+  const { _id } = req.body
+
+  const copy = await Copy.findOne({ _id })
+
+  if (!copy) {
+    res.json({
+      message: 'This copy does not exist',
+      status: 'FAILED'
+    })
+  } else {
+    const copy = await Copy.deleteOne({ _id })
+
+    res.json({
+      message: 'Copy deleted',
+      copy
     })
   }
 })
