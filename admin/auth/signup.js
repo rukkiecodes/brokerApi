@@ -36,13 +36,12 @@ router.post("/signup", async (req, res) => {
             _id: new mongoose.Types.ObjectId(),
             name,
             email,
-            phone,
             admin: true,
             password: hash,
             verified: false
           }
           user = await Admin.create(newUser)
-          sendOTPVerificationEmail(user, res)
+          // sendOTPVerificationEmail(user, res)
 
           res.status(201).json({
             message: "Auth successful",
