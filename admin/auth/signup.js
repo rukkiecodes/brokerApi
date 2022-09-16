@@ -16,7 +16,7 @@ const oAuth2Client = new google.auth.OAuth2(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECR
 oAuth2Client.setCredentials({ refresh_token: GOOGLE_REFRESH_TOKEN })
 
 router.post("/signup", async (req, res) => {
-  const { firstName, lastName, referal, email, phone, password } = req.body
+  const { name, referal, email, phone, password } = req.body
 
   try {
     let user = await Admin.findOne({ email })
@@ -34,8 +34,7 @@ router.post("/signup", async (req, res) => {
         } else {
           let newUser = {
             _id: new mongoose.Types.ObjectId(),
-            firstName,
-            lastName,
+            name,
             email,
             phone,
             admin: true,
@@ -61,7 +60,7 @@ router.post("/signup", async (req, res) => {
 })
 
 // send otp verification email
-const sendOTPVerificationEmail = async ({ _id, email, firstName }, res) => {
+const sendOTPVerificationEmail = async ({ _id, email, name }, res) => {
   try {
     const accessToken = await oAuth2Client.getAccessToken()
 
@@ -80,7 +79,7 @@ const sendOTPVerificationEmail = async ({ _id, email, firstName }, res) => {
     const otp = `${Math.floor(1000 + Math.random() * 9000)}`
 
     const mailOptions = {
-      from: process.env.EMAIL,
+      from: process.env.email,
       to: email,
       subject: 'Verify Your Email',
       html: `
@@ -90,13 +89,13 @@ const sendOTPVerificationEmail = async ({ _id, email, firstName }, res) => {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>${firstName} feedback</title>
+        <title>${name} feedback</title>
       </head>
 
       <body
         style="background-color: white; display: flex; justify-content: center; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
         <div style="width: 600px; max-width: 100%; background-color: white;">
-          <h1>Hello ${firstName}, Please verify your email</h1>
+          <h1>Hello ${name}, Please verify your email</h1>
           <p style="font-size: 2rem"><b>${otp}</b></p>
           <p>This code <b>expires in 1 hour</b></p>
         </div>
