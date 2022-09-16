@@ -5,6 +5,21 @@ const upload = require('../middleware/multer')
 const cloudinary = require('../middleware/cloud')
 const checkAuth = require("../middleware/auth")
 
+router.post('/get', async (req, res) => {
+  let transactions = await Deposit.find()
+
+  if (transactions.length >= 1)
+    return res.status(200).json({
+      message: "transactions found",
+      transactions,
+    })
+  else
+    return res.status(200).json({
+      message: "transactions not found",
+      transactions: [],
+    })
+})
+
 router.post('/getTransactions', checkAuth, async (req, res) => {
   const { user } = req.body
 
