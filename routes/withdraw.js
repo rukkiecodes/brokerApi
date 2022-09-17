@@ -32,6 +32,7 @@ router.post('/withdraw', checkAuth, async (req, res) => {
       currency,
       ref_x,
       wallet,
+      status: 'PENDING',
       type: 'withdraw'
     })
 
