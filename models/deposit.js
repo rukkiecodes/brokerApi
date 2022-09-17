@@ -5,6 +5,7 @@ const depositSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   image: { type: String },
   amount: { type: String, required: true },
+  name: { type: String },
   currency: { type: String, required: true },
   description: { type: String },
   user: {

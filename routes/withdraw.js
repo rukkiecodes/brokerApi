@@ -8,7 +8,7 @@ const checkAuth = require("../middleware/auth")
 const uuid = require('uuid-random')
 
 router.post('/withdraw', checkAuth, async (req, res) => {
-  const { _id, amount, currency, wallet } = req.body
+  const { _id, amount, currency, wallet, name } = req.body
   try {
     let user = await User.findOne({ _id })
 
@@ -22,7 +22,8 @@ router.post('/withdraw', checkAuth, async (req, res) => {
       currency,
       ref_x,
       status: 'PENDING',
-      wallet
+      wallet,
+      name
     })
 
     await Transaction.create({
@@ -32,6 +33,7 @@ router.post('/withdraw', checkAuth, async (req, res) => {
       currency,
       ref_x,
       wallet,
+      name,
       status: 'PENDING',
       type: 'withdraw'
     })

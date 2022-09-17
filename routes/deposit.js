@@ -10,7 +10,7 @@ const cloudinary = require('../middleware/cloud')
 const uuid = require('uuid-random')
 
 router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
-  const { _id, amount, currency, wallet } = req.body
+  const { _id, amount, currency, wallet, name } = req.body
 
   try {
     let user = await User.findOne({ _id })
@@ -26,6 +26,7 @@ router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
       amount,
       currency,
       wallet,
+      name,
       status: 'PENDING',
       ref_x,
       pop: result.secure_url
@@ -37,6 +38,7 @@ router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
       amount,
       currency,
       wallet,
+      name,
       status: 'PENDING',
       ref_x,
       type: 'deposit',

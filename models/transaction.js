@@ -5,6 +5,7 @@ const transactionSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   image: { type: String },
   amount: { type: String },
+  name: { type: String },
   currency: { type: String },
   description: { type: String },
   user: {
