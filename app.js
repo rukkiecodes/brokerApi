@@ -57,6 +57,7 @@ app.use('/admin', [
   require('./admin/auth/updateAvatar'),
   require('./admin/auth/allUsers'),
   require('./admin/transactions'),
+  require('./admin/withdraw'),
   require('./admin/copy')
 ])
 
