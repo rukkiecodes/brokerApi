@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Withdraw = require('../models/withraw')
+const Transaction = require('../models/transaction')
 const checkAuth = require("../middleware/auth")
 
 router.post('/withdrawRequest', checkAuth, async (req, res) => {
@@ -15,6 +16,7 @@ router.post('/confirmWithdrawRequest', checkAuth, async (req, res) => {
   const { _id } = req.body
   try {
     const withraw = await Withdraw.updateOne({ _id }, { $set: { status: 'CONFIRMED' } })
+    await Transaction.updateOne({ _id }, { $set: { status: 'CONFIRMED' } })
 
     res.json({
       withraw
