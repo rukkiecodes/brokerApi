@@ -3,6 +3,15 @@ const Withdraw = require('../models/withraw')
 const checkAuth = require("../middleware/auth")
 
 router.post('/withdrawRequest', checkAuth, async (req, res) => {
+  let transaction = await Withdraw.find()
+
+  return res.status(200).json({
+    message: "transaction found",
+    transaction,
+  })
+})
+
+router.post('/pendingWithdrawRequest', checkAuth, async (req, res) => {
   let transaction = await Withdraw.find({ status: 'PENDING' })
 
   return res.status(200).json({
