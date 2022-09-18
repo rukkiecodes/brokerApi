@@ -20,7 +20,7 @@ router.post('/get', async (req, res) => {
     })
 })
 
-router.post('/getTransactions', checkAuth, async (req, res) => {
+router.post('/getTransactions', async (req, res) => {
   const { user } = req.body
 
   let transactions = await Deposit.find({ user })
