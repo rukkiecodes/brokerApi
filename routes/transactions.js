@@ -79,7 +79,7 @@ router.post('/proofOfPayment', upload.single('pop'), checkAuth, async (req, res)
 router.post('/investment', checkAuth, async (req, res) => {
   const { user } = req.body
 
-  const investmnt = await Deposit.find({ user })
+  const investmnt = await Deposit.find()
   const allInvestments = []
   const sum = allInvestments.reduce((a, b) => a + b, 0)
 
