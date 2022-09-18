@@ -76,4 +76,19 @@ router.post('/proofOfPayment', upload.single('pop'), checkAuth, async (req, res)
   }
 })
 
+router.post('/investment', async (req, res) => {
+  const { user } = req.body
+
+  const investmnt = await Deposit.find({ user })
+  const allInvestments = []
+  const sum = allInvestments.reduce((a, b) => a + b, 0)
+
+  investmnt.forEach((item, i) => {
+    allInvestments.push(parseFloat(item.amount))
+  })
+  res.json({
+    investment: sum
+  })
+})
+
 module.exports = router
