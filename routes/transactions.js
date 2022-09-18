@@ -76,7 +76,7 @@ router.post('/proofOfPayment', upload.single('pop'), checkAuth, async (req, res)
   }
 })
 
-router.post('/investment', async (req, res) => {
+router.post('/investment', checkAuth, async (req, res) => {
   const { user } = req.body
 
   const investmnt = await Deposit.find({ user })
