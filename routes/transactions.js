@@ -91,7 +91,7 @@ router.post('/investment', checkAuth, async (req, res) => {
     })
   } else {
     let investment = await Investment.create({
-      _id: new mongoose.Types.ObjectId(),
+      _id: user,
       amount,
       user
     })
