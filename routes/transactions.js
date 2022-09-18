@@ -79,7 +79,7 @@ router.post('/proofOfPayment', upload.single('pop'), checkAuth, async (req, res)
   }
 })
 
-router.post('/investment', checkAuth, async (req, res) => {
+router.post('/investment', async (req, res) => {
   const { user, amount } = req.body
 
   let _investment = await Investment.findOne({ user })
