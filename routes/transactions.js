@@ -1,9 +1,12 @@
 const router = require('express').Router()
 const Deposit = require('../models/deposit')
 const Transaction = require('../models/transaction')
+const Investment = require('../models/investment')
 const upload = require('../middleware/multer')
 const cloudinary = require('../middleware/cloud')
 const checkAuth = require("../middleware/auth")
+const mongoose = require("mongoose")
+const investment = require('../models/investment')
 
 router.post('/get', async (req, res) => {
   let transactions = await Deposit.find()
@@ -76,19 +79,27 @@ router.post('/proofOfPayment', upload.single('pop'), checkAuth, async (req, res)
   }
 })
 
-router.post('/investment', checkAuth, async (req, res) => {
-  const { user } = req.body
+router.post('/investment', async (req, res) => {
+  const { user, amount } = req.body
 
-  const investmnt = await Deposit.find()
-  const allInvestments = []
-  const sum = allInvestments.reduce((a, b) => a + b, 0)
+  let _investment = await Investment.findOne({ user })
 
-  investmnt.forEach((item, i) => {
-    allInvestments.push(parseFloat(item.amount))
-  })
-  res.json({
-    investment: sum
-  })
+  if (_investment) {
+    let investment = await Investment.updateOne({ user }, { $set: { amount: _investment.amount + amount } })
+    res.json({
+      investment
+    })
+  } else {
+    let investment = await Investment.create({
+      _id: new mongoose.Types.ObjectId(),
+      amount,
+      user
+    })
+
+    res.json({
+      investment
+    })
+  }
 })
 
 module.exports = router
