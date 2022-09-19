@@ -92,7 +92,7 @@ router.post('/investment', async (req, res) => {
       investment: _investment
     })
   } else {
-    const invest = await Investment.create({
+    let investment = await Investment.create({
       _id: new mongoose.Types.ObjectId(),
       amount,
       user
