@@ -49,8 +49,6 @@ router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
       time: moment().format("MMM Do YY")
     })
 
-    investment(user._id, amount)
-
     return res.json({
       deposit: newDeposit
     })
@@ -62,20 +60,5 @@ router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
     })
   }
 })
-
-const investment = (user, amount) => { 
-  let _investment = await Investment.findOne({ user })
-
-  if (_investment) {
-    let newAmount = _investment.amount + amount
-    await Investment.updateOne({ user }, { $set: { amount: newAmount } })
-  } else {
-    await Investment.create({
-      _id: new mongoose.Types.ObjectId(),
-      amount,
-      user
-    })
-  }
-}
 
 module.exports = router
