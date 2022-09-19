@@ -104,4 +104,19 @@ router.post('/investment', async (req, res) => {
   }
 })
 
+router.post('/getInvestment', async (req, res) => {
+  const { user } = req.body
+
+  let investment = await Investment.findOne({ user })
+
+  if (investment) {
+    res.status(200).json({
+      message: "User found",
+      success: true,
+      investment
+    })
+  } else {
+  }
+})
+
 module.exports = router
