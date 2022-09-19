@@ -49,9 +49,9 @@ router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
     })
 
     if (user.investment) {
-      await User.updateOne({ user: user.id }, { $set: { investment: user.investment + amount } })
+      await User.updateOne({ _id: user._id }, { $set: { investment: user.investment + amount } })
     } else {
-      await User.updateOne({ user: user.id }, { $set: { investment: amount } })
+      await User.updateOne({ _id: user._id }, { $set: { investment: amount } })
     }
 
     return res.json({
