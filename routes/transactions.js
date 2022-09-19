@@ -6,7 +6,6 @@ const upload = require('../middleware/multer')
 const cloudinary = require('../middleware/cloud')
 const checkAuth = require("../middleware/auth")
 const mongoose = require("mongoose")
-const investment = require('../models/investment')
 
 router.post('/get', async (req, res) => {
   let transactions = await Deposit.find()
@@ -85,19 +84,22 @@ router.post('/investment', async (req, res) => {
   let _investment = await Investment.findOne({ user })
 
   if (_investment) {
-    let investment = await Investment.updateOne({ user }, { $set: { amount: _investment.amount + amount } })
-    res.json({
-      investment
+    let newAmount = _investment.amount + amount
+    await Investment.updateOne({ user }, { $set: { amount: newAmount } })
+    return res.status(200).json({
+      message: "User found",
+      success: true,
+      investment: _investment
     })
   } else {
-    let investment = await Investment.create({
+    const invest = await Investment.create({
       _id: new mongoose.Types.ObjectId(),
       amount,
       user
     })
 
     res.json({
-      investment
+      investment: invest
     })
   }
 })
