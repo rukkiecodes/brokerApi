@@ -17,6 +17,7 @@ const transactionSchema = new mongoose.Schema({
   wallet: { type: String },
   ref_x: { type: String },
   type: { type: String },
+  time: { type: String },
   verified: Boolean
 }, { timestamps: true })
 

@@ -6,6 +6,7 @@ const mongoose = require("mongoose")
 const checkAuth = require("../middleware/auth")
 const upload = require('../middleware/multer')
 const cloudinary = require('../middleware/cloud')
+const moment = require('moment')
 
 const uuid = require('uuid-random')
 
@@ -29,7 +30,8 @@ router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
       name,
       status: 'PENDING',
       ref_x,
-      pop: result.secure_url
+      pop: result.secure_url,
+      time: moment().format("MMM Do YY")
     })
 
     await Transaction.create({
@@ -42,7 +44,8 @@ router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
       status: 'PENDING',
       ref_x,
       type: 'deposit',
-      pop: result.secure_url
+      pop: result.secure_url,
+      time: moment().format("MMM Do YY")
     })
 
     return res.json({

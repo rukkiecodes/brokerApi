@@ -4,6 +4,7 @@ const User = require('../models/user')
 const Transaction = require('../models/transaction')
 const mongoose = require("mongoose")
 const checkAuth = require("../middleware/auth")
+const moment = require('moment')
 
 const uuid = require('uuid-random')
 
@@ -23,7 +24,8 @@ router.post('/withdraw', checkAuth, async (req, res) => {
       ref_x,
       status: 'PENDING',
       wallet,
-      name
+      name,
+      time: moment().format("MMM Do YY")
     })
 
     await Transaction.create({
@@ -35,7 +37,8 @@ router.post('/withdraw', checkAuth, async (req, res) => {
       wallet,
       name,
       status: 'PENDING',
-      type: 'withdraw'
+      type: 'withdraw',
+      time: moment().format("MMM Do YY")
     })
 
     return res.json({
