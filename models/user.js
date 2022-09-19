@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema({
   specialty: { type: String },
   password: { type: String, required: true },
   description: { type: String },
+  investment: { type: Number, default: 0 },
   verified: Boolean
 }, { timestamps: true })
 
