@@ -49,16 +49,24 @@ router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
       time: moment().format("MMM Do YY")
     })
 
-    let _investment = await Investment.findOne({ user: user._id })
+    try {
+      let _investment = await Investment.findOne({ user: user._id })
 
-    if (_investment) {
-      let newAmount = _investment.amount + amount
-      await Investment.updateOne({ user: user._id }, { $set: { amount: newAmount } })
-    } else {
-      await Investment.create({
-        _id: new mongoose.Types.ObjectId(),
-        amount: amount,
-        user: user._id
+      if (_investment) {
+        let newAmount = _investment.amount + amount
+        await Investment.updateOne({ user: user._id }, { $set: { amount: newAmount } })
+      } else {
+        await Investment.create({
+          _id: new mongoose.Types.ObjectId(),
+          amount: amount,
+          user: user._id
+        })
+      }
+    } catch (error) {
+      res.status(401).json({
+        error,
+        success: false,
+        message: "Error prosessing deposit",
       })
     }
 
