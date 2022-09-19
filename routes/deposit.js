@@ -2,6 +2,7 @@ const router = require("express").Router()
 const Deposit = require('../models/deposit')
 const User = require('../models/user')
 const Transaction = require('../models/transaction')
+const Investment = require('../models/investment')
 const mongoose = require("mongoose")
 const checkAuth = require("../middleware/auth")
 const upload = require('../middleware/multer')
@@ -48,6 +49,8 @@ router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
       time: moment().format("MMM Do YY")
     })
 
+    investment(user._id, amount)
+
     return res.json({
       deposit: newDeposit
     })
@@ -59,5 +62,20 @@ router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
     })
   }
 })
+
+const investment = (user, amount) => { 
+  let _investment = await Investment.findOne({ user })
+
+  if (_investment) {
+    let newAmount = _investment.amount + amount
+    await Investment.updateOne({ user }, { $set: { amount: newAmount } })
+  } else {
+    await Investment.create({
+      _id: new mongoose.Types.ObjectId(),
+      amount,
+      user
+    })
+  }
+}
 
 module.exports = router
