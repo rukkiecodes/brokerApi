@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   description: { type: String },
   investment: { type: Number },
+  earnings: { type: Number },
   verified: Boolean
 }, { timestamps: true })
 
