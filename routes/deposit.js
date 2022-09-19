@@ -2,7 +2,6 @@ const router = require("express").Router()
 const Deposit = require('../models/deposit')
 const User = require('../models/user')
 const Transaction = require('../models/transaction')
-const Investment = require('../models/investment')
 const mongoose = require("mongoose")
 const checkAuth = require("../middleware/auth")
 const upload = require('../middleware/multer')
@@ -49,25 +48,10 @@ router.post('/add', upload.single('pop'), checkAuth, async (req, res) => {
       time: moment().format("MMM Do YY")
     })
 
-    try {
-      let _investment = await Investment.findOne({ user: user._id })
-
-      if (_investment) {
-        let newAmount = _investment.amount + amount
-        await Investment.updateOne({ user: user._id }, { $set: { amount: newAmount } })
-      } else {
-        await Investment.create({
-          _id: new mongoose.Types.ObjectId(),
-          amount: amount,
-          user: user._id
-        })
-      }
-    } catch (error) {
-      res.status(401).json({
-        error,
-        success: false,
-        message: "Error prosessing deposit",
-      })
+    if (user.investment) {
+      await User.updateOne({ user: user.id }, { $set: { investment: user.investment + amount } })
+    } else {
+      await User.updateOne({ user: user.id }, { $set: { investment: amount } })
     }
 
     return res.json({
