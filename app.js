@@ -72,7 +72,7 @@ app.use('/withdraw', require('./routes/withdraw'))
 app.use('/copy', require('./routes/copy'))
 
 app.get('/forgotPassword', (req, res) => {
-  res.render('forgotPassword')
+  await res.render('forgotPassword')
 })
 
 app.get('/', (req, res) => {
