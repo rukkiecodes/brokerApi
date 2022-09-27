@@ -11,24 +11,33 @@ router.post('/creatCopy', upload.single('image'), async (req, res) => {
   const _id = new mongoose.Types.ObjectId()
 
   try {
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: process.env.CLOUDINARY_FOLDER,
-    })
+    const copy = await Copy.findOne({ name })
 
-    const newCopy = await Copy.create({
-      _id,
-      user: _id,
-      image: result.secure_url,
-      name,
-      wins,
-      losses,
-      rate,
-      profit
-    })
+    if (copy) {
+      res.json({
+        error: 'Sorry this trader already exist',
+        copy
+      })
+    } else {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: process.env.CLOUDINARY_FOLDER,
+      })
 
-    return res.json({
-      copy: newCopy
-    })
+      const newCopy = await Copy.create({
+        _id,
+        user: _id,
+        image: result.secure_url,
+        name,
+        wins,
+        losses,
+        rate,
+        profit
+      })
+
+      return res.json({
+        copy: newCopy
+      })
+    }
   } catch (error) {
     res.json({
       error: error.message
