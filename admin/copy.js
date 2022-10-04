@@ -71,7 +71,7 @@ router.post('/editCopy', async (req, res) => {
   } else {
     try {
       let copy = await Copy.updateOne({ _id }, {
-        $set: { earnings, name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount }
+        $set: { earnings: copy.profit * earnings, name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount }
       })
       return res.status(200).json({
         message: "Copy updated",
