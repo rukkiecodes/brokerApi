@@ -45,6 +45,19 @@ router.post('/creatCopy', upload.single('image'), async (req, res) => {
   }
 })
 
+router.get('/allCopies', async (req, res) => {
+  const copies = await Copy.find()
+
+  try {
+    res.json({
+      message: 'Copies fetched successfully',
+      copies
+    })
+  } catch (error) {
+    throw Error('Error sending request')
+  }
+})
+
 router.post('/editCopy', async (req, res) => {
   const { _id, earnings, name, wins, losses, rate, profit } = req.body
 
