@@ -59,7 +59,7 @@ router.get('/allCopies', async (req, res) => {
 })
 
 router.post('/editCopy', async (req, res) => {
-  const { _id, earnings, name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount } = req.body
+  const { _id, name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount } = req.body
 
   const copy = await Copy.findOne({ _id })
 
