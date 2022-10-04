@@ -68,7 +68,7 @@ router.post('/editCopy', async (req, res) => {
       status: 'FAILED'
     })
   } else {
-//     try {
+    try {
       let copy = await Copy.updateOne({ _id }, {
         $set: { earnings: copy.profit * earnings, name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount }
       })
@@ -77,11 +77,11 @@ router.post('/editCopy', async (req, res) => {
         success: true,
         copy
       })
-//     } catch (error) {
-//       res.json({
-//         message: 'Error processing editCopy request'
-//       })
-//     }
+    } catch (error) {
+      res.json({
+        message: 'Error processing editCopy request'
+      })
+    }
   }
 })
 
