@@ -62,31 +62,27 @@ router.post('/editCopy', async (req, res) => {
   const { _id, name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount } = req.body
 
   const copy = await Copy.findOne({ _id })
-
-  res.json({
-    copy
-  })
-//   if (!copy) {
-//     res.json({
-//       message: 'This copy does not exist',
-//       status: 'FAILED'
-//     })
-//   } else {
-//     try {
-//       let copy = await Copy.updateOne({ _id }, {
-//         $set: { earnings: copy.profit * earnings, name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount }
-//       })
-//       return res.status(200).json({
-//         message: "Copy updated",
-//         success: true,
-//         copy
-//       })
-//     } catch (error) {
-//       res.json({
-//         message: 'Error processing editCopy request'
-//       })
-//     }
-//   }
+  if (!copy) {
+    res.json({
+      message: 'This copy does not exist',
+      status: 'FAILED'
+    })
+  } else {
+    try {
+      let copy = await Copy.updateOne({ _id }, {
+        $set: { earnings: copy.profit * earnings, name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount }
+      })
+      return res.status(200).json({
+        message: "Copy updated",
+        success: true,
+        copy
+      })
+    } catch (error) {
+      res.json({
+        message: 'Error processing editCopy request'
+      })
+    }
+  }
 })
 
 router.post('/deleteCopy', async (req, res) => {
