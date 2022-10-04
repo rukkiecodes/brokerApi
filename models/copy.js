@@ -14,6 +14,9 @@ const copySchema = new mongoose.Schema({
   copy: { type: String },
   rate: { type: String },
   profit: { type: String },
+  earnings: { type: String },
+  from: { type: String },
+  to: { type: String },
 }, { timestamps: true })
 
 module.exports = mongoose.model("Copy", copySchema)
