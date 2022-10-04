@@ -45,6 +45,34 @@ router.post('/creatCopy', upload.single('image'), async (req, res) => {
   }
 })
 
+router.post('/editCopy', async (req, res) => {
+  const { _id, earnings, name, wins, losses, rate, profit } = req.body
+
+  const copy = await Copy.findOne({ _id })
+
+  if (!copy) {
+    res.json({
+      message: 'This copy does not exist',
+      status: 'FAILED'
+    })
+  } else {
+    try {
+      let copy = await Copy.updateOne({ email }, {
+        $set: { earnings, name, wins, losses, rate, profit }
+      })
+      return res.status(200).json({
+        message: "Copy updated",
+        success: true,
+        copy
+      })
+    } catch (error) {
+      res.json({
+        message: 'Error processing editCopy request'
+      })
+    }
+  }
+})
+
 router.post('/deleteCopy', async (req, res) => {
   const { _id } = req.body
 
