@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Copy = require('../models/copy')
+const User = require('../models/user')
 const mongoose = require("mongoose")
 
 router.post('/getCopies', async (req, res) => {
@@ -20,14 +21,17 @@ router.post('/copy', async (req, res) => {
 
   const _user = await Copy.findOne({ user })
 
+  const __user = await User.findOne({ user })
+
   if (_user) {
     res.json({
       message: 'Already copied'
     })
   } else {
     try {
+      let id = new mongoose.Types.ObjectId(),
       _copy = await Copy.create({
-        _id: new mongoose.Types.ObjectId(),
+        _id: id,
         user,
         copy,
         image,
@@ -37,6 +41,13 @@ router.post('/copy', async (req, res) => {
         rate,
         profit
       })
+
+      _user = await User.updateOne({ _id: user }, {
+        $set: {
+          copies: id
+        }
+      })
+
       res.status(201).json({
         _copy
       })

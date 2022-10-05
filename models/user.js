@@ -18,7 +18,8 @@ const userSchema = new mongoose.Schema({
   description: { type: String },
   investment: { type: Number },
   earnings: { type: Number },
-  verified: Boolean
+  verified: Boolean,
+  copies: { type: Array }
 }, { timestamps: true })
 
 module.exports = mongoose.model("User", userSchema)
