@@ -27,26 +27,26 @@ router.post('/copy', async (req, res) => {
     })
   } else {
     try {
-      _copy = await Copy.create({
-        _id,
-        user,
-        copy,
-        image,
-        name,
-        wins,
-        losses,
-        rate,
-        profit
-      })
+//       _copy = await Copy.create({
+//         _id,
+//         user,
+//         copy,
+//         image,
+//         name,
+//         wins,
+//         losses,
+//         rate,
+//         profit
+//       })
 
-      await User.updateOne({ _id: user }, {
-        $addToSet: {
-          copies: _id
-        }
-      })
+//       await User.updateOne({ _id: user }, {
+//         $addToSet: {
+//           copies: _id
+//         }
+//       })
 
       res.status(201).json({
-        _copy
+        _copy: 'copy'
       })
     } catch (error) {
       throw ("error")
