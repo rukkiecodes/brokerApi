@@ -21,17 +21,14 @@ router.post('/copy', async (req, res) => {
 
   const _user = await Copy.findOne({ user })
 
-  const __user = await User.findOne({ user })
-
   if (_user) {
     res.json({
       message: 'Already copied'
     })
   } else {
     try {
-      let id = new mongoose.Types.ObjectId(),
       _copy = await Copy.create({
-        _id: id,
+        _id,
         user,
         copy,
         image,
@@ -43,13 +40,13 @@ router.post('/copy', async (req, res) => {
       })
 
       _user = await User.updateOne({ _id: user }, {
-        $set: {
-          copies: id
+        $addToSet: {
+          copies: _id
         }
       })
 
       res.status(201).json({
-        _copy
+        _user
       })
     } catch (error) {
       throw ("error")
