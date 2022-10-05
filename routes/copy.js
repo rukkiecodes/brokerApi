@@ -39,14 +39,14 @@ router.post('/copy', async (req, res) => {
         profit
       })
 
-      _user = await User.updateOne({ _id: user }, {
+      await User.updateOne({ _id: user }, {
         $addToSet: {
           copies: _id
         }
       })
 
       res.status(201).json({
-        _user
+        _copy
       })
     } catch (error) {
       throw ("error")
