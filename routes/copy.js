@@ -1,12 +1,13 @@
 const router = require('express').Router()
 const Copy = require('../models/copy')
+const Copied = require('../models/copied')
 const User = require('../models/user')
 const mongoose = require("mongoose")
 
 router.post('/getCopies', async (req, res) => {
-  const { limit } = req.body
+  const { user } = req.body
   try {
-    const copies = await Copy.find().limit(limit)
+    const copies = await Copied.find({ user })
 
     res.json({
       copies
@@ -17,9 +18,9 @@ router.post('/getCopies', async (req, res) => {
 })
 
 router.post('/copy', async (req, res) => {
-  const { _id, user, copy, image, name, wins, losses, rate, profit } = req.body
+  const { user, copy, image, name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount } = req.body
 
-  const _user = await Copy.findOne({ user })
+  const _user = await Copied.findOne({ copy })
 
   if (_user) {
     res.json({
@@ -27,26 +28,33 @@ router.post('/copy', async (req, res) => {
     })
   } else {
     try {
-      _copy = await Copy.create({
-        _id,
-        user,
+      const _copy = await Copied.create({
+        _id: new mongoose.Types.ObjectId(),
         copy,
+        user,
         image,
         name,
         wins,
         losses,
         rate,
-        profit
+        profit,
+        from,
+        to,
+        bankState,
+        salesState,
+        currency,
+        amount
       })
 
-      _user = await User.updateOne({ _id: user }, {
+      const _user = await User.updateOne({ _id: user }, {
         $addToSet: {
-          copies: _id
+          copies: copy
         }
       })
 
-      res.status(201).json({
-        _user
+      res.json({
+        copy: _copy,
+        user: _user
       })
     } catch (error) {
       throw ("error")
