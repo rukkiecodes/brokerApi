@@ -20,7 +20,7 @@ const copySchema = new mongoose.Schema({
   bankState: { type: String },
   salesState: { type: String },
   currency: { type: String },
-  amount: { type: String },
+  amount: { type: Number },
 }, { timestamps: true })
 
 module.exports = mongoose.model("Copy", copySchema)
