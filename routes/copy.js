@@ -4,6 +4,19 @@ const Copied = require('../models/copied')
 const User = require('../models/user')
 const mongoose = require("mongoose")
 
+router.post('/getAllCopies', async (req, res) => {
+  const { limit } = req.body
+  try {
+    const copies = await Copied.find()
+
+    res.json({
+      copies
+    })
+  } catch (error) {
+    throw ("error")
+  }
+})
+
 router.post('/getCopies', async (req, res) => {
   const { user } = req.body
   try {
