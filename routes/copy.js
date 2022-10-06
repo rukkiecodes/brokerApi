@@ -17,8 +17,8 @@ router.post('/getAllCopies', async (req, res) => {
   }
 })
 
-router.post('/getCopies', async (req, res) => {
-  const { user } = req.body
+router.get('/getCopies/:user', async (req, res) => {
+  const { user } = req.params
   try {
     const copies = await Copied.find({ _user: user })
 
