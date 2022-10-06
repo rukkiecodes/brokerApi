@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 router.post('/support', async (req, res) => {
   const { user, email, subject, message } = req.body
   try {
-    const support = await new Support.create({
+    const support = await Support.create({
       _id: new mongoose.Types.ObjectId(),
       email,
       subject,
@@ -16,7 +16,9 @@ router.post('/support', async (req, res) => {
       support
     })
   } catch (error) {
-    throw ("error")
+    res.json({
+      error
+    })
   }
 })
 
