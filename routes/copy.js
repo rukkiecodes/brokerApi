@@ -20,7 +20,7 @@ router.post('/getAllCopies', async (req, res) => {
 router.post('/getCopies', async (req, res) => {
   const { user } = req.body
   try {
-    const copies = await Copied.find({ user })
+    const copies = await Copied.find({ _user: user })
 
     res.json({
       copies
