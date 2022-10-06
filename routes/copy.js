@@ -7,7 +7,7 @@ const mongoose = require("mongoose")
 router.post('/getAllCopies', async (req, res) => {
   const { limit } = req.body
   try {
-    const copies = await Copied.find()
+    const copies = await Copy.find().limit(limit)
 
     res.json({
       copies
