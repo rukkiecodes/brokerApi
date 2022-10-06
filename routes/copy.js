@@ -45,6 +45,7 @@ router.post('/copy', async (req, res) => {
         _id: new mongoose.Types.ObjectId(),
         copy,
         user,
+        _user: user,
         image,
         name,
         wins,
