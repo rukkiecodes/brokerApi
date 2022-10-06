@@ -70,6 +70,7 @@ app.use('/deposit', require('./routes/deposit'))
 app.use('/transaction', require('./routes/transactions'))
 app.use('/withdraw', require('./routes/withdraw'))
 app.use('/copy', require('./routes/copy'))
+app.use('/support', require('./routes/support'))
 
 app.get('/forgotPassword', (req, res) => {
   res.render('forgotPassword')
