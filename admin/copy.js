@@ -31,7 +31,8 @@ router.post('/creatCopy', upload.single('image'), async (req, res) => {
         wins,
         losses,
         rate,
-        profit
+        profit,
+        earnings: profit * 2
       })
 
       return res.json({
@@ -61,8 +62,8 @@ router.get('/allCopies', async (req, res) => {
 router.post('/editCopy', async (req, res) => {
   const { _id, name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount } = req.body
 
-  const copy = await Copy.findOne({ _id })
-  if (!copy) {
+  const __copy = await Copy.findOne({ _id })
+  if (!__copy) {
     res.json({
       message: 'This copy does not exist',
       status: 'FAILED'
@@ -70,7 +71,7 @@ router.post('/editCopy', async (req, res) => {
   } else {
     try {
       let copy = await Copy.updateOne({ _id }, {
-        $set: { name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount }
+        $set: { name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount, earnings: __copy.earnings ? (__copy.earnings + profit) * 2 : profit * 2 }
       })
       return res.status(200).json({
         message: "Copy updated",
