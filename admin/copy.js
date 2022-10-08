@@ -60,7 +60,7 @@ router.get('/allCopies', async (req, res) => {
 })
 
 router.post('/editCopy', async (req, res) => {
-  const { _id, name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount } = req.body
+  const { _id, name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount, earnings } = req.body
 
   const __copy = await Copy.findOne({ _id })
   if (!__copy) {
@@ -70,11 +70,8 @@ router.post('/editCopy', async (req, res) => {
     })
   } else {
     try {
-//       let copy = await Copy.updateOne({ _id }, {
-//         $set: { name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount, earnings: __copy.earnings != undefined ? (__copy.earnings + profit) * 2 : profit * 2 }
-//       })
       let copy = await Copy.updateOne({ _id }, {
-        $set: { name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount, earnings: profit * 2 }
+        $set: { name, wins, losses, rate, profit, from, to, bankState, salesState, currency, amount, earnings }
       })
       return res.status(200).json({
         message: "Copy updated",
