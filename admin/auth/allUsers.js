@@ -15,4 +15,25 @@ router.get('/allUsers', checkAuth, async (req, res) => {
   }
 })
 
+router.get('/updateEarnings', checkAuth, async (req, res) => {
+  const { email } = req.body
+
+  try {
+    let user = await User.updateOne({ email }, {
+      $set: { earnings }
+    })
+    return res.status(200).json({
+      message: "User found",
+      success: true,
+      user
+    })
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: "Auth failed",
+      error,
+    })
+  }
+})
+
 module.exports = router

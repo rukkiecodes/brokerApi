@@ -58,7 +58,8 @@ app.use('/admin', [
   require('./admin/auth/allUsers'),
   require('./admin/transactions'),
   require('./admin/withdraw'),
-  require('./admin/copy')
+  require('./admin/copy'),
+  require('./admin/updateEarnings')
 ])
 
 app.use('/waitlist', [
