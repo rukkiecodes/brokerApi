@@ -5,16 +5,12 @@ router.post('/updateEarnings', async (req, res) => {
   const { email, earnings } = req.body
 
   try {
-    let user = await User.updateOne({ email }, {
-      $set: { email, earnings }
-    })
-    return res.status(200).json({
-      message: "User found",
-      success: true,
+    let user = await User.updateOne({ email }, { $set: { earnings } })
+    res.status(200).json({
       user
     })
   } catch (error) {
-    return res.status(401).json({
+    res.status(401).json({
       success: false,
       message: "Auth failed",
       error,
