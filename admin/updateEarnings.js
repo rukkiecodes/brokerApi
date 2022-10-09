@@ -12,7 +12,6 @@ router.post('/updateEarnings', async (req, res) => {
   } catch (error) {
     res.status(401).json({
       success: false,
-      message: "Auth failed",
       error,
     })
   }
