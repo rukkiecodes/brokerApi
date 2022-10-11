@@ -17,14 +17,24 @@ router.post('/getAllCopies', async (req, res) => {
   }
 })
 
-router.get('/getCopies/:user', async (req, res) => {
-  const { user } = req.params
+router.post('/getCopies', async (req, res) => {
+  const { _id } = req.body
   try {
-    const copies = await Copied.find({ _user: user })
+    const copiesArray = []
 
-    res.json({
-      copies
+    const user = await User.findOne({ _id })
+
+    user.copies.forEach(async element => {
+      const copies = await Copy.find({ _id: element })
+      copiesArray.push(...copies)
     })
+
+    setTimeout(() => {
+      res.json({
+        user: user.copies,
+        copies: copiesArray
+      })
+    }, 5000)
   } catch (error) {
     throw ("error")
   }

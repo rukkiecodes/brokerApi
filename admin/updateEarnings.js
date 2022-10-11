@@ -6,11 +6,11 @@ router.post('/updateEarnings', async (req, res) => {
 
   try {
     let user = await User.updateOne({ email }, { $set: { earnings } })
-    res.status(200).json({
+    res.json({
       user
     })
   } catch (error) {
-    res.status(401).json({
+    res.json({
       success: false,
       error,
     })
