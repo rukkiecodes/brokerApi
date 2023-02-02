@@ -1,5 +1,3 @@
-return
-
 require("dotenv").config()
 const express = require("express")
 const morgan = require("morgan")
@@ -108,8 +106,8 @@ app.use((error, req, res, next) => {
   })
 })
 
-//const PORT = process.env.PORT || 8000
-//app.listen(
-//  PORT,
-//  console.log(`🚀 @http://localhost:${PORT}`)
-//)
+const PORT = process.env.PORT || 8000
+app.listen(
+  PORT,
+  console.log(`🚀 @http://localhost:${PORT}`)
+)
